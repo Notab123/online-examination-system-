@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Exam {
     private int id;
@@ -6,42 +9,11 @@ public class Exam {
     private ArrayList<Question> questions;
     private ArrayList<Candidate> candidates;
 
-    public Exam() {
-        this.id = 0;
-        this.name = "";
-        this.questions = new ArrayList<>();
-        this.candidates = new ArrayList<>();
-    }
-
     public Exam(int id, String name) {
         this.id = id;
         this.name = name;
         this.questions = new ArrayList<>();
         this.candidates = new ArrayList<>();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ArrayList<Question> getQuestions() {
-        return questions;
-    }
-
-    public ArrayList<Candidate> getCandidates() {
-        return candidates;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void addQuestion(Question q) {
@@ -52,27 +24,40 @@ public class Exam {
         candidates.add(c);
     }
 
-    public void displayQuestions() {
-        System.out.println("\nQuestions");
-        for (Question q : questions) {
-            q.display();
-        }
+    public void displayAll() {
+        System.out.println("\n--- Exam: " + name + " ---");
+        System.out.println("Questions:");
+        for (Question q : questions) q.display();
+        System.out.println("Candidates:");
+        for (Candidate c : candidates) c.display();
     }
 
-    public void displayCandidates() {
-        System.out.println("\nCandidates");
+    public Candidate searchCandidateByName(String name) {
         for (Candidate c : candidates) {
-            c.display();
-        }
-    }
-
-    public int getPassedCount() {
-        int count = 0;
-        for (Candidate c : candidates) {
-            if (c.isPassed()) {
-                count++;
+            if (c.getName().equalsIgnoreCase(name)) {
+                return c;
             }
         }
-        return count;
+        return null;
+    }
+
+    public void sortCandidatesByScore() {
+        Collections.sort(candidates, Comparator.comparingInt(Candidate::getScore).reversed());
+        System.out.println("\n[System]: Candidates sorted by score (Descending).");
+    }
+
+    public ArrayList<Candidate> filterPassedCandidates() {
+        ArrayList<Candidate> passed = new ArrayList<>();
+        for (Candidate c : candidates) {
+            if (c.isPassed()) {
+                passed.add(c);
+            }
+        }
+        return passed;
+    }
+
+    @Override
+    public String toString() {
+        return "Exam{id=" + id + ", name='" + name + "', totalCandidates=" + candidates.size() + "}";
     }
 }

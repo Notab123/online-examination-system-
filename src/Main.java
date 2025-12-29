@@ -1,38 +1,40 @@
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
-        Exam exam = new Exam(1, "Java Basics");
+        Exam exam = new Exam(1, "Java OOP Basics");
 
-        Question q1 = new Question(1, "What is a variable?", "container");
-        Question q2 = new Question(2, "What is a class?", "blueprint");
-        Question q3 = new Question(3, "What is OOP?", "programming");
+        exam.addQuestion(new Question(1, "What is a variable?", "container"));
+        exam.addQuestion(new Question(2, "What is parent class?", "superclass"));
 
-        exam.addQuestion(q1);
-        exam.addQuestion(q2);
-        exam.addQuestion(q3);
+        exam.addCandidate(new Candidate(101, "Aldiyar", 85));
+        exam.addCandidate(new Candidate(102, "Aisha", 55));
+        exam.addCandidate(new Candidate(103, "Kanat", 90));
+        exam.addCandidate(new Candidate(104, "Bota", 40));
 
-        Candidate c1 = new Candidate(101, "Aldiyar", 85);
-        Candidate c2 = new Candidate(102, "Aisha", 55);
-        Candidate c3 = new Candidate(103, "Kanat", 90);
+        exam.displayAll();
 
-        exam.addCandidate(c1);
-        exam.addCandidate(c2);
-        exam.addCandidate(c3);
+        System.out.println("\n--- toString() Demonstration ---");
+        System.out.println(exam.toString());
+        System.out.println(exam.searchCandidateByName("Aldiyar").toString());
 
-        System.out.println("Exam: " + exam.getName());
-        exam.displayQuestions();
-        exam.displayCandidates();
+        System.out.println("\n--- Searching ---");
+        String searchName = "Kanat";
+        Candidate found = exam.searchCandidateByName(searchName);
+        if (found != null) {
+            System.out.println("Found: " + found.getName() + " with score " + found.getScore());
+        } else {
+            System.out.println("Candidate " + searchName + " not found.");
+        }
 
-        System.out.println("\nComparison");
-        System.out.println("c1 score: " + c1.getScore());
-        System.out.println("c3 score: " + c3.getScore());
-        System.out.println("c1 score > c2 score: " + (c1.getScore() > c2.getScore()));
-        System.out.println("\nAnswer Verification");
-        System.out.println("Is 'container' correct for Q1? " + q1.checkAnswer("container"));
-        System.out.println("Is 'object' correct for Q1? " + q1.checkAnswer("object"));
+        System.out.println("\n--- Sorting ---");
+        exam.sortCandidatesByScore();
+        exam.displayAll();
 
-        System.out.println("\nStatistics");
-        System.out.println("Total candidates: " + exam.getCandidates().size());
-        System.out.println("Passed: " + exam.getPassedCount());
-        System.out.println("Failed: " + (exam.getCandidates().size() - exam.getPassedCount()));
+        System.out.println("\n--- Filtering (Passed Candidates) ---");
+        ArrayList<Candidate> passedOnes = exam.filterPassedCandidates();
+        for (Candidate c : passedOnes) {
+            System.out.println("Passed: " + c.getName());
+        }
     }
 }
