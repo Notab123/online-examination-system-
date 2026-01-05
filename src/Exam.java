@@ -25,7 +25,7 @@ public class Exam {
     }
 
     public void displayAll() {
-        System.out.println("\n--- Exam: " + name + " ---");
+        System.out.println("\nExam: " + name + " ");
         System.out.println("Questions:");
         for (Question q : questions) q.display();
         System.out.println("Candidates:");

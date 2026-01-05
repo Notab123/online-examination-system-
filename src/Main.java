@@ -14,11 +14,11 @@ public class Main {
 
         exam.displayAll();
 
-        System.out.println("\n--- toString() Demonstration ---");
+        System.out.println("\ntoString() Demonstration");
         System.out.println(exam.toString());
         System.out.println(exam.searchCandidateByName("Aldiyar").toString());
 
-        System.out.println("\n--- Searching ---");
+        System.out.println("\nSearching");
         String searchName = "Kanat";
         Candidate found = exam.searchCandidateByName(searchName);
         if (found != null) {
@@ -27,11 +27,11 @@ public class Main {
             System.out.println("Candidate " + searchName + " not found.");
         }
 
-        System.out.println("\n--- Sorting ---");
+        System.out.println("\nSorting");
         exam.sortCandidatesByScore();
         exam.displayAll();
 
-        System.out.println("\n--- Filtering (Passed Candidates) ---");
+        System.out.println("\nFiltering (Passed Candidates)");
         ArrayList<Candidate> passedOnes = exam.filterPassedCandidates();
         for (Candidate c : passedOnes) {
             System.out.println("Passed: " + c.getName());

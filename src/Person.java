@@ -23,10 +23,8 @@ public abstract class Person {
         this.name = name;
     }
 
-    // Abstract method for Polymorphism
     public abstract void display();
 
-    // Overriding Object class methods
     @Override
     public String toString() {
         return "Person{id=" + id + ", name='" + name + "'}";
