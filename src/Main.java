@@ -2,39 +2,36 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        Exam exam = new Exam(1, "Java OOP Basics");
+        DatabaseManager db = new DatabaseManager();
 
-        exam.addQuestion(new Question(1, "What is a variable?", "container"));
-        exam.addQuestion(new Question(2, "What is parent class?", "superclass"));
+        System.out.println("--- 1. INSERT DATA ---");
+        db.addCandidate(new Candidate(1, "Aldiyar", 85));
+        db.addCandidate(new Candidate(2, "Aisha", 55));
+        db.addCandidate(new Candidate(3, "Kanat", 90));
 
-        exam.addCandidate(new Candidate(101, "Aldiyar", 85));
-        exam.addCandidate(new Candidate(102, "Aisha", 55));
-        exam.addCandidate(new Candidate(103, "Kanat", 90));
-        exam.addCandidate(new Candidate(104, "Bota", 40));
-
-        exam.displayAll();
-
-        System.out.println("\ntoString() Demonstration");
-        System.out.println(exam.toString());
-        System.out.println(exam.searchCandidateByName("Aldiyar").toString());
-
-        System.out.println("\nSearching");
-        String searchName = "Kanat";
-        Candidate found = exam.searchCandidateByName(searchName);
-        if (found != null) {
-            System.out.println("Found: " + found.getName() + " with score " + found.getScore());
-        } else {
-            System.out.println("Candidate " + searchName + " not found.");
+        System.out.println("\n--- 2. READ DATA ---");
+        ArrayList<Candidate> candidates = db.getAllCandidates();
+        for (Candidate c : candidates) {
+            c.display();
         }
 
-        System.out.println("\nSorting");
-        exam.sortCandidatesByScore();
-        exam.displayAll();
+        System.out.println("\n--- 3. UPDATE DATA ---");
+        // Изменим баллы Аиши (ID 2) с 55 на 70
+        db.updateCandidateScore(2, 70);
 
-        System.out.println("\nFiltering (Passed Candidates)");
-        ArrayList<Candidate> passedOnes = exam.filterPassedCandidates();
-        for (Candidate c : passedOnes) {
-            System.out.println("Passed: " + c.getName());
+        // Проверим изменение
+        ArrayList<Candidate> updatedList = db.getAllCandidates();
+        for (Candidate c : updatedList) {
+            if (c.getId() == 2) System.out.println("Updated Aisha: " + c);
+        }
+
+        System.out.println("\n--- 4. DELETE DATA ---");
+        // Удалим Алдияра (ID 1)
+        db.deleteCandidate(1);
+
+        System.out.println("\n--- FINAL LIST FROM DB ---");
+        for (Candidate c : db.getAllCandidates()) {
+            c.display();
         }
     }
 }
